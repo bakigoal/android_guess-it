@@ -38,22 +38,13 @@ class GameFragment : Fragment() {
 
         viewModel.score.observe(viewLifecycleOwner, { binding.scoreText.text = it.toString() })
         viewModel.word.observe(viewLifecycleOwner, { binding.wordText.text = it })
+        viewModel.gameFinished.observe(viewLifecycleOwner, { if (it) gameFinished() })
 
-        setListeners()
+        binding.correctButton.setOnClickListener { viewModel.onCorrect() }
+        binding.skipButton.setOnClickListener { viewModel.onSkip() }
 
         return binding.root
 
-    }
-
-    private fun setListeners() {
-        binding.correctButton.setOnClickListener {
-            viewModel.onCorrect()
-            if (viewModel.gameFinished) gameFinished()
-        }
-        binding.skipButton.setOnClickListener {
-            viewModel.onSkip()
-            if (viewModel.gameFinished) gameFinished()
-        }
     }
 
     private fun gameFinished() =

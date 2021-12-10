@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModel
 
 class GameViewModel : ViewModel() {
 
-    var gameFinished = false
+    val gameFinished: LiveData<Boolean>
+        get() = _gameFinished
     val word: LiveData<String>
         get() = _word
     val score: LiveData<Int>
         get() = _score
 
+    private var _gameFinished = MutableLiveData(false)
     private var _word = MutableLiveData("")
     private var _score = MutableLiveData(0)
     private lateinit var wordList: MutableList<String>
@@ -38,10 +40,10 @@ class GameViewModel : ViewModel() {
     }
 
     private fun nextWord() {
-        if (!gameFinished && wordList.isNotEmpty()) {
+        if (wordList.isNotEmpty()) {
             _word.value = wordList.removeAt(0)
         } else {
-            gameFinished = true
+            _gameFinished.value = true
         }
     }
 
