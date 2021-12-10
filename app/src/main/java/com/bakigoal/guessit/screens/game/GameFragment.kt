@@ -46,16 +46,17 @@ class GameFragment : Fragment() {
     private fun setListeners() {
         binding.correctButton.setOnClickListener {
             viewModel.onCorrect()
+            if (viewModel.gameFinished) gameFinished()
             updateUI()
         }
         binding.skipButton.setOnClickListener {
             viewModel.onSkip()
+            if (viewModel.gameFinished) gameFinished()
             updateUI()
         }
     }
 
     private fun updateUI() {
-        if (viewModel.gameFinished) gameFinished()
         updateWordText()
         updateScoreText()
     }
