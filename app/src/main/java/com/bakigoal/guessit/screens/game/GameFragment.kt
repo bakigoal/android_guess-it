@@ -35,10 +35,11 @@ class GameFragment : Fragment() {
 
         Log.i("GameFragment", "Called ViewModelProvider(this).get")
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        viewModel.score.observe(viewLifecycleOwner, { updateScoreText(it) })
+        viewModel.word.observe(viewLifecycleOwner, { updateWordText(it) })
 
         setListeners()
 
-        updateUI()
         return binding.root
 
     }
@@ -47,29 +48,21 @@ class GameFragment : Fragment() {
         binding.correctButton.setOnClickListener {
             viewModel.onCorrect()
             if (viewModel.gameFinished) gameFinished()
-            updateUI()
         }
         binding.skipButton.setOnClickListener {
             viewModel.onSkip()
             if (viewModel.gameFinished) gameFinished()
-            updateUI()
         }
     }
 
-    private fun updateUI() {
-        updateWordText()
-        updateScoreText()
-    }
-
     private fun gameFinished() =
-        findNavController(this).navigate(GameFragmentDirections.actionGameToScore(viewModel.score))
+        findNavController(this).navigate(GameFragmentDirections.actionGameToScore(viewModel.score.value as Int))
 
-    private fun updateWordText() {
-        binding.wordText.text = viewModel.word
-
+    private fun updateWordText(word: String) {
+        binding.wordText.text = word
     }
 
-    private fun updateScoreText() {
-        binding.scoreText.text = viewModel.score.toString()
+    private fun updateScoreText(newScore: Int) {
+        binding.scoreText.text = newScore.toString()
     }
 }

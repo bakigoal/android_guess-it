@@ -1,12 +1,13 @@
 package com.bakigoal.guessit.screens.game
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class GameViewModel : ViewModel() {
 
-    var word = ""
-    var score = 0
+    var word = MutableLiveData("")
+    var score = MutableLiveData(0)
     var gameFinished = false
     private lateinit var wordList: MutableList<String>
 
@@ -21,18 +22,18 @@ class GameViewModel : ViewModel() {
     }
 
     fun onSkip() {
-        score--
+        score.value = score.value as Int - 1
         nextWord()
     }
 
     fun onCorrect() {
-        score++
+        score.value = score.value as Int + 1
         nextWord()
     }
 
     private fun nextWord() {
         if (!gameFinished && wordList.isNotEmpty()) {
-            word = wordList.removeAt(0)
+            word.value = wordList.removeAt(0)
         } else {
             gameFinished = true
         }
