@@ -22,12 +22,12 @@ class GameViewModel : ViewModel() {
     }
 
     fun onSkip() {
-        score.value = score.value as Int - 1
+        score.value = (score.value)?.minus(1)
         nextWord()
     }
 
     fun onCorrect() {
-        score.value = score.value as Int + 1
+        score.value = (score.value)?.plus(1)
         nextWord()
     }
 
