@@ -73,4 +73,8 @@ class GameViewModel : ViewModel() {
         )
         wordList.shuffle()
     }
+
+    fun onGameFinishComplete() {
+        _gameFinished.value = false
+    }
 }
