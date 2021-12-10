@@ -35,8 +35,9 @@ class GameFragment : Fragment() {
 
         Log.i("GameFragment", "Called ViewModelProvider(this).get")
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
-        viewModel.score.observe(viewLifecycleOwner, { updateScoreText(it) })
-        viewModel.word.observe(viewLifecycleOwner, { updateWordText(it) })
+
+        viewModel.score.observe(viewLifecycleOwner, { binding.scoreText.text = it.toString() })
+        viewModel.word.observe(viewLifecycleOwner, { binding.wordText.text = it })
 
         setListeners()
 
@@ -58,12 +59,4 @@ class GameFragment : Fragment() {
     private fun gameFinished() =
         findNavController(this)
             .navigate(GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0))
-
-    private fun updateWordText(word: String) {
-        binding.wordText.text = word
-    }
-
-    private fun updateScoreText(newScore: Int) {
-        binding.scoreText.text = newScore.toString()
-    }
 }
