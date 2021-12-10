@@ -56,7 +56,8 @@ class GameFragment : Fragment() {
     }
 
     private fun gameFinished() =
-        findNavController(this).navigate(GameFragmentDirections.actionGameToScore(viewModel.score.value as Int))
+        findNavController(this)
+            .navigate(GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0))
 
     private fun updateWordText(word: String) {
         binding.wordText.text = word
