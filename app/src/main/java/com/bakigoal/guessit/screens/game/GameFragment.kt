@@ -81,10 +81,8 @@ class GameFragment : Fragment() {
     /**
      * Called when the game is finished
      */
-    private fun gameFinished() {
-        val action = GameFragmentDirections.actionGameToScore(score)
-        findNavController(this).navigate(action)
-    }
+    private fun gameFinished() =
+        findNavController(this).navigate(GameFragmentDirections.actionGameToScore(score))
 
     /**
      * Moves to the next word in the list
