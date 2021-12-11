@@ -30,6 +30,7 @@ class GameFragment : Fragment() {
         viewModel.score.observe(viewLifecycleOwner, { binding.scoreText.text = it.toString() })
         viewModel.word.observe(viewLifecycleOwner, { binding.wordText.text = it })
         viewModel.gameFinished.observe(viewLifecycleOwner, { if (it) gameFinished() })
+        viewModel.time.observe(viewLifecycleOwner, { binding.timerText.text = it })
 
         binding.correctButton.setOnClickListener { viewModel.onCorrect() }
         binding.skipButton.setOnClickListener { viewModel.onSkip() }
