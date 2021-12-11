@@ -40,11 +40,11 @@ class GameViewModel : ViewModel() {
     }
 
     private fun nextWord() {
-        if (wordList.isNotEmpty()) {
-            _word.value = wordList.removeAt(0)
-        } else {
+        if (wordList.isEmpty()) {
             _gameFinished.value = true
+            return
         }
+        _word.value = wordList.removeAt(0)
     }
 
     private fun resetList() {
