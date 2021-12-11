@@ -31,26 +31,27 @@ class GameFragment : Fragment() {
 
         Log.i("GameFragment", "Called ViewModelProvider(this).get")
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        viewModel.gameFinished.observe(viewLifecycleOwner, this::onGameFinishedEvent)
+        viewModel.buzzType.observe(viewLifecycleOwner, this::onBuzzTypeEvent)
 
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.gameFinished.observe(viewLifecycleOwner, { gameFinished ->
-            if (gameFinished) {
-                gameFinished()
-                viewModel.onGameFinishComplete()
-            }
-        })
-
-        viewModel.buzzType.observe(viewLifecycleOwner, { buzzType ->
-            if (buzzType != BuzzType.NO_BUZZ) {
-                buzz(buzzType.pattern)
-                viewModel.onBuzzComplete()
-            }
-        })
-
-
         return binding.root
+    }
+
+    private fun onBuzzTypeEvent(buzzType: BuzzType) {
+        if (buzzType != BuzzType.NO_BUZZ) {
+            buzz(buzzType.pattern)
+            viewModel.onBuzzComplete()
+        }
+    }
+
+    private fun onGameFinishedEvent(gameFinished: Boolean) {
+        if (gameFinished) {
+            gameFinished()
+            viewModel.onGameFinishComplete()
+        }
     }
 
     private fun gameFinished() {
