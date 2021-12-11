@@ -11,7 +11,7 @@ class GameViewModel : ViewModel() {
 
     companion object {
         private const val ONE_SECOND = 1000L
-        private const val COUNTDOWN_TIME = 90000L
+        private const val COUNTDOWN_TIME = 10000L
     }
 
     val gameFinished: LiveData<Boolean>
